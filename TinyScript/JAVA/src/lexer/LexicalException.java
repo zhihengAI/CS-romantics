@@ -1,0 +1,19 @@
+package lexer;
+
+// 在状态机中发现报错功能
+public class LexicalException extends Exception {
+    private String msg;
+
+    public LexicalException(char c) {
+        msg = String.format("Unexpected character %c", c);
+    }
+
+    public LexicalException(String _msg) {
+        msg = _msg;
+    }
+
+    @Override
+    public String getMessage() {
+        return msg;
+    }
+}

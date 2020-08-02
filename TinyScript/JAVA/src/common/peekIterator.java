@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.stream.Stream;
 
 // 流数据处理
-class PeekIterator<T> implements Iterator<T> {
+public class PeekIterator<T> implements Iterator<T> {
 
     private Iterator<T> it;
 
