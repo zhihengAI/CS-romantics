@@ -1,5 +1,18 @@
 const TokenType = require("./TokenType")
 
+// 本项目的关键字词
+const Keywords=new Set([
+  "var",
+  "if",
+  "else",
+  "for",
+  "while",
+  "break",
+  "func",
+  "return"
+])
+
+
 class Token {
   constructor(type, value) {
     this._type = type
@@ -24,6 +37,8 @@ class Token {
   toString(){
     return `type ${this._type.type}, value ${this._value}`
   }
+
+  static 
 }
 
 module.exports = Token
