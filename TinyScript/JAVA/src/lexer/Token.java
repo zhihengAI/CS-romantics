@@ -37,7 +37,7 @@ public class Token {
     }
 
     /**
-     * 提取变量或关键字
+     * 判断变量或关键字
      *
      * @param it
      * @return
@@ -72,6 +72,7 @@ public class Token {
 
     /**
      * 判定是否为字符串
+     *
      * @param it
      * @return
      * @throws LexicalException
@@ -116,6 +117,7 @@ public class Token {
 
     /**
      * 判定操作符
+     *
      * @param it
      * @return
      * @throws LexicalException
@@ -271,5 +273,96 @@ public class Token {
             }
         } // end while
         throw new LexicalException("Unexpected error");
+    }
+
+    /**
+     * 判定数值类型（int or float）
+     * @param it
+     * @return
+     * @throws LexicalException
+     */
+    public static Token makeNumber(PeekIterator<Character> it) throws LexicalException {
+        String s = "";
+        int state = 0;
+
+        while (it.hasNext()) {
+            char lookahead = it.peek();
+
+            switch (state) {
+                case 0:
+                    if (lookahead == '0') {
+                        state = 1;
+                    } else if (AlphabetHepler.isNumber(lookahead)) {
+                        state = 2;
+                    } else if (lookahead == '+' || lookahead == '-') {
+                        state = 3;
+                    } else if (lookahead == '.') {
+                        state = 5;
+                    }
+                    break;
+                case 1: {
+                    if (lookahead == '0') {
+                        state = 1;
+                    } else if (AlphabetHepler.isNumber(lookahead)) {
+                        state = 2;
+                    } else if (lookahead == '.') {
+                        state = 4;
+                    } else {
+                        return new Token(TokenType.INTEGER, s);
+                    }
+                    break;
+                }
+                case 2: {
+                    if (AlphabetHepler.isNumber(lookahead)) {
+                        state = 2;
+                    } else if (lookahead == '.') {
+                        state = 4;
+                    } else {
+                        return new Token(TokenType.INTEGER, s);
+                    }
+                    break;
+                }
+                case 3: {
+                    if (AlphabetHepler.isNumber(lookahead)) {
+                        state = 2;
+                    } else if (lookahead == '.') {
+                        state = 5;
+                    } else {
+                        throw new LexicalException(lookahead);
+                    }
+                    break;
+                }
+                case 4: {
+                    if (lookahead == '.') {
+                        throw new LexicalException(lookahead);
+                    } else if (AlphabetHepler.isNumber(lookahead)) {
+                        state = 20;
+                    } else {
+                        return new Token(TokenType.FLOAT, s);
+                    }
+                    break;
+                }
+                case 5: {
+                    if (AlphabetHepler.isNumber(lookahead)) {
+                        state = 20;
+                    } else {
+                        return new Token(TokenType.FLOAT, s);
+                    }
+                    break;
+                }
+                case 20: {
+                    if (AlphabetHepler.isNumber(lookahead)) {
+                        state = 20;
+                    } else if (lookahead == '.') {
+                        throw new LexicalException(lookahead);
+                    } else {
+                        return new Token(TokenType.FLOAT, s);
+                    }
+                }
+            } // end switch
+            it.next();
+            s += lookahead;
+        } // end while
+        throw new LexicalException("Unexcepted error");
     }
 }
