@@ -25,4 +25,58 @@ describe('Token', () => {
     assertToken(token2, 'true', TokenType.BOOLEAN)
     assertToken(token3, 'abc', TokenType.VARIABLE)
   })
+
+  it('makeString', () => {
+    const tests = ["'123'", '"456"']
+
+    for (let test of tests) {
+      const it = new PeekIterator(arrayToGenerator([...test]))
+      const token = Token.makeString(it)
+
+      assertToken(token, test, TokenType.STRING)
+    }
+  })
+
+  it('makeOp', () => {
+    const tests = [
+      ['+ XXX', '+'],
+      ['++mmm', '++'],
+      ['/=g', '/='],
+      ['==32', '=='],
+      ['&=3982', '&='],
+      ['&878', '&'],
+      ['||xx', '||'],
+      ['^=1234', '^='],
+      ['%7', '%']
+    ]
+
+    for (let test of tests) {
+      const [input, expected] = test
+      const it = new PeekIterator(arrayToGenerator([...input]))
+      const token = Token.makeOp(it)
+
+      assertToken(token, expected, TokenType.OPERATOR)
+    }
+  })
+
+  it('makeNumber', () => {
+    const tests = [
+      '+0 aa',
+      '-0 bb',
+      '.3 ccc',
+      '.555 ddd',
+      '763.345 eee',
+      '-100 ggg',
+      '-1000.34524*324523'
+    ]
+
+    for (let test of tests) {
+      const it = new PeekIterator(arrayToGenerator([...test]))
+      const token = Token.makeNumber(it)
+      const [expected] = test.split(/[ *]/)
+      const type = test.indexOf('.') === -1 ? TokenType.INTEGER : TokenType.FLOAT
+
+      assertToken(token, expected, type)
+    }
+  })
 })

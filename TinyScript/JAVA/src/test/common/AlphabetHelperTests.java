@@ -8,22 +8,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AlphabetHelperTests {
     @Test
     public void test(){
-        assertEquals(true,AlphabetHepler.isLetter('a'));
-        assertEquals(false,AlphabetHepler.isLetter('*'));
+        assertEquals(true, AlphabetHelper.isLetter('a'));
+        assertEquals(false, AlphabetHelper.isLetter('*'));
 
-        assertEquals(true,AlphabetHepler.isLiteral('a'));
-        assertEquals(true,AlphabetHepler.isLiteral('_'));
-        assertEquals(true,AlphabetHepler.isLiteral('7'));
-        assertEquals(false,AlphabetHepler.isLiteral('@'));
+        assertEquals(true, AlphabetHelper.isLiteral('a'));
+        assertEquals(true, AlphabetHelper.isLiteral('_'));
+        assertEquals(true, AlphabetHelper.isLiteral('7'));
+        assertEquals(false, AlphabetHelper.isLiteral('@'));
 
-        assertEquals(true,AlphabetHepler.isNumber('1'));
-        assertEquals(true,AlphabetHepler.isNumber('9'));
-        assertEquals(false,AlphabetHepler.isNumber('x'));
-        assertEquals(false,AlphabetHepler.isNumber('='));
-        assertEquals(true,AlphabetHepler.isOperator('+'));
-        assertEquals(true,AlphabetHepler.isOperator('-'));
-        assertEquals(true,AlphabetHepler.isOperator('*'));
-        assertEquals(true,AlphabetHepler.isOperator('/'));
-        assertEquals(false,AlphabetHepler.isOperator('a'));
+        assertEquals(true, AlphabetHelper.isNumber('1'));
+        assertEquals(true, AlphabetHelper.isNumber('9'));
+        assertEquals(false, AlphabetHelper.isNumber('x'));
+        assertEquals(false, AlphabetHelper.isNumber('='));
+        assertEquals(true, AlphabetHelper.isOperator('+'));
+        assertEquals(true, AlphabetHelper.isOperator('-'));
+        assertEquals(true, AlphabetHelper.isOperator('*'));
+        assertEquals(true, AlphabetHelper.isOperator('/'));
+        assertEquals(false, AlphabetHelper.isOperator('a'));
     }
 }

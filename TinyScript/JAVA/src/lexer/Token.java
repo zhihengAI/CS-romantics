@@ -1,6 +1,6 @@
 package lexer;
 
-import common.AlphabetHepler;
+import common.AlphabetHelper;
 import common.PeekIterator;
 
 public class Token {
@@ -48,7 +48,7 @@ public class Token {
         while (it.hasNext()) {
             // lookahead 每次提取下一个字符保证是符合条件的
             var lookahead = it.peek();
-            if (AlphabetHepler.isLetter(lookahead)) {
+            if (AlphabetHelper.isLetter(lookahead)) {
                 s += lookahead;
             } else {
                 break;
@@ -292,7 +292,7 @@ public class Token {
                 case 0:
                     if (lookahead == '0') {
                         state = 1;
-                    } else if (AlphabetHepler.isNumber(lookahead)) {
+                    } else if (AlphabetHelper.isNumber(lookahead)) {
                         state = 2;
                     } else if (lookahead == '+' || lookahead == '-') {
                         state = 3;
@@ -303,7 +303,7 @@ public class Token {
                 case 1: {
                     if (lookahead == '0') {
                         state = 1;
-                    } else if (AlphabetHepler.isNumber(lookahead)) {
+                    } else if (AlphabetHelper.isNumber(lookahead)) {
                         state = 2;
                     } else if (lookahead == '.') {
                         state = 4;
@@ -313,7 +313,7 @@ public class Token {
                     break;
                 }
                 case 2: {
-                    if (AlphabetHepler.isNumber(lookahead)) {
+                    if (AlphabetHelper.isNumber(lookahead)) {
                         state = 2;
                     } else if (lookahead == '.') {
                         state = 4;
@@ -323,7 +323,7 @@ public class Token {
                     break;
                 }
                 case 3: {
-                    if (AlphabetHepler.isNumber(lookahead)) {
+                    if (AlphabetHelper.isNumber(lookahead)) {
                         state = 2;
                     } else if (lookahead == '.') {
                         state = 5;
@@ -335,7 +335,7 @@ public class Token {
                 case 4: {
                     if (lookahead == '.') {
                         throw new LexicalException(lookahead);
-                    } else if (AlphabetHepler.isNumber(lookahead)) {
+                    } else if (AlphabetHelper.isNumber(lookahead)) {
                         state = 20;
                     } else {
                         return new Token(TokenType.FLOAT, s);
@@ -343,7 +343,7 @@ public class Token {
                     break;
                 }
                 case 5: {
-                    if (AlphabetHepler.isNumber(lookahead)) {
+                    if (AlphabetHelper.isNumber(lookahead)) {
                         state = 20;
                     } else {
                         return new Token(TokenType.FLOAT, s);
@@ -351,7 +351,7 @@ public class Token {
                     break;
                 }
                 case 20: {
-                    if (AlphabetHepler.isNumber(lookahead)) {
+                    if (AlphabetHelper.isNumber(lookahead)) {
                         state = 20;
                     } else if (lookahead == '.') {
                         throw new LexicalException(lookahead);
