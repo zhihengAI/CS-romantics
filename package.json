@@ -2,7 +2,7 @@
   "name": "cs-romantic",
   "version": "1.0.0",
   "description": "����Ա��������������ԭ��������ϵͳ��ͼ��ѧ ��Ŀѧϰ",
-  "main": "index.js",
+  "main": "Lexer.js",
   "scripts": {
     "test": "mocha"
   },

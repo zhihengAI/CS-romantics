@@ -10,6 +10,7 @@ public class AlphabetHelperTests {
     public void test(){
         assertEquals(true, AlphabetHelper.isLetter('a'));
         assertEquals(false, AlphabetHelper.isLetter('*'));
+        assertEquals(false, AlphabetHelper.isLetter('^'));
 
         assertEquals(true, AlphabetHelper.isLiteral('a'));
         assertEquals(true, AlphabetHelper.isLiteral('_'));

@@ -56,7 +56,8 @@ public class ToknTests {
                 "+ xxx",
                 "++mmm",
                 "/=g",
-                "==1",
+                "=6sd",
+                "==-100+8",
                 "&=3982",
                 "&777",
                 "||xxx",
@@ -64,7 +65,7 @@ public class ToknTests {
                 "%7"
         };
 
-        String[] results = {"+", "++", "/=", "==", "&=", "&", "||", "^=", "%"};
+        String[] results = {"+", "++", "/=", "=", "==", "&=", "&", "||", "^=", "%"};
 
         int i = 0;
         for (String test : tests) {

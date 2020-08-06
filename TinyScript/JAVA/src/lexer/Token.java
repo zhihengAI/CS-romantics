@@ -29,6 +29,10 @@ public class Token {
         return _type == TokenType.VARIABLE;
     }
 
+    public boolean isValue() {
+        return isVariable() || isScalar();
+    }
+
     public boolean isScalar() {
         return _type == TokenType.INTEGER ||
                 _type == TokenType.FLOAT ||
@@ -277,6 +281,7 @@ public class Token {
 
     /**
      * 判定数值类型（int or float）
+     *
      * @param it
      * @return
      * @throws LexicalException
@@ -364,5 +369,13 @@ public class Token {
             s += lookahead;
         } // end while
         throw new LexicalException("Unexcepted error");
+    }
+
+    public boolean isNumber() {
+        return this._type == TokenType.INTEGER || this._type == TokenType.FLOAT;
+    }
+
+    public boolean isOperator() {
+        return this._type == TokenType.OPERATOR;
     }
 }
