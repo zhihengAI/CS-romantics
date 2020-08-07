@@ -29,7 +29,7 @@ class Token {
   }
 
   isVariable() {
-    return this._type === TokenType.VARIABLE
+    return this._type == TokenType.VARIABLE
   }
 
   isScalar() {
@@ -65,7 +65,7 @@ class Token {
     if (Keywords.has(s)) {
       return new Token(TokenType.KEYWORD, s)
     }
-    if (s === 'true' || s === 'false') {
+    if (s == 'true' || s == 'false') {
       return new Token(TokenType.BOOLEAN, s)
     }
 
@@ -82,7 +82,7 @@ class Token {
 
       switch (state) {
         case 0:
-          if (c === '"') {
+          if (c == '"') {
             // 双引号到状态 1
             state = 1
           } else {
@@ -92,14 +92,14 @@ class Token {
           s += c
           break
         case 1:
-          if (c === '"') {
+          if (c == '"') {
             return new Token(TokenType.STRING, s + c)
           } else {
             s += c
           }
           break
         case 2:
-          if (c === "'") {
+          if (c == "'") {
             return new Token(TokenType.STRING, s + c)
           } else {
             s += c
@@ -163,9 +163,9 @@ class Token {
           }
           break
         case 1: {
-          if (lookahead === '+') {
+          if (lookahead == '+') {
             return new Token(TokenType.OPERATOR, '++')
-          } else if (lookahead === '=') {
+          } else if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '+=')
           } else {
             it.putBack()
@@ -173,9 +173,9 @@ class Token {
           }
         }
         case 2: {
-          if (lookahead === '-') {
+          if (lookahead == '-') {
             return new Token(TokenType.OPERATOR, '--')
-          } else if (lookahead === '=') {
+          } else if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '-=')
           } else {
             it.putBack()
@@ -183,7 +183,7 @@ class Token {
           }
         }
         case 3: {
-          if (lookahead === '=') {
+          if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '*=')
           } else {
             it.putBack()
@@ -191,7 +191,7 @@ class Token {
           }
         }
         case 4: {
-          if (lookahead === '=') {
+          if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '/=')
           } else {
             it.putBack()
@@ -199,9 +199,9 @@ class Token {
           }
         }
         case 5: {
-          if (lookahead === '=') {
+          if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '>=')
-          } else if (lookahead === '>') {
+          } else if (lookahead == '>') {
             return new Token(TokenType.OPERATOR, '>>')
           } else {
             it.putBack()
@@ -209,9 +209,9 @@ class Token {
           }
         }
         case 6: {
-          if (lookahead === '=') {
+          if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '<=')
-          } else if (lookahead === '>') {
+          } else if (lookahead == '>') {
             return new Token(TokenType.OPERATOR, '<<')
           } else {
             it.putBack()
@@ -219,7 +219,7 @@ class Token {
           }
         }
         case 7: {
-          if (lookahead === '=') {
+          if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '==')
           } else {
             it.putBack()
@@ -227,7 +227,7 @@ class Token {
           }
         }
         case 8: {
-          if (lookahead === '=') {
+          if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '!=')
           } else {
             it.putBack()
@@ -235,9 +235,9 @@ class Token {
           }
         }
         case 9: {
-          if (lookahead === '&') {
+          if (lookahead == '&') {
             return new Token(TokenType.OPERATOR, '&&')
-          } else if (lookahead === '=') {
+          } else if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '&=')
           } else {
             it.putBack()
@@ -245,9 +245,9 @@ class Token {
           }
         }
         case 10: {
-          if (lookahead === '|') {
+          if (lookahead == '|') {
             return new Token(TokenType.OPERATOR, '||')
-          } else if (lookahead === '=') {
+          } else if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '|=')
           } else {
             it.putBack()
@@ -255,9 +255,9 @@ class Token {
           }
         }
         case 11: {
-          if (lookahead === '^') {
+          if (lookahead == '^') {
             return new Token(TokenType.OPERATOR, '^^')
-          } else if (lookahead === '=') {
+          } else if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '^=')
           } else {
             it.putBack()
@@ -265,7 +265,7 @@ class Token {
           }
         }
         case 12: {
-          if (lookahead === '=') {
+          if (lookahead == '=') {
             return new Token(TokenType.OPERATOR, '%=')
           } else {
             it.putBack()

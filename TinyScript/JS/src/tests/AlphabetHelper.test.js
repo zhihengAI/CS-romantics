@@ -3,7 +3,6 @@ const {
 } = require('chai')
 const AlphabetHelper = require('../lexer/AlphaBetHelper')
 
-
 describe("AlphabetHelper", () => {
   it('charCheck', () => {
     // Letter check

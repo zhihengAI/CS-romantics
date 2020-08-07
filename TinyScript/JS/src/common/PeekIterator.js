@@ -15,8 +15,8 @@ class PeekIterator {
   }
 
   peek() {
-    if (this.stackPutBacks.length > 1) {
-      return this.stackPutBacks.head
+    if (this.stackPutBacks.length > 0) {
+      return this.stackPutBacks.tail
     }
 
     const val = this.next()
