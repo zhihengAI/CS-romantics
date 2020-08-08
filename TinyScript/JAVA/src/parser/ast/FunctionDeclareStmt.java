@@ -1,4 +1,4 @@
-package parser;
+package parser.ast;
 
 public class FunctionDeclareStmt extends Stmt {
     public FunctionDeclareStmt(ASTNode _parent) {

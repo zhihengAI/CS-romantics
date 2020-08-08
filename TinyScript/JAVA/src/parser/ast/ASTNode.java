@@ -1,4 +1,4 @@
-package parser;
+package parser.ast;
 
 import lexer.Token;
 
@@ -37,8 +37,42 @@ public abstract class ASTNode {
         return lexeme;
     }
 
+    public void setLexeme(Token token) {
+        this.lexeme = token;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String s) {
+        this.label = s;
+    }
+
+    public ASTNodeTypes getType() {
+        return this.type;
+    }
+
+    public void setType(ASTNodeTypes type) {
+        this.type = type;
+    }
+
     // 这个方法有点危险
     public List<ASTNode> getChildren() {
         return children;
+    }
+
+    public void print(int indent) {
+        if (indent == 0) {
+            System.out.println("print:" + this);
+        }
+
+        for (int i = 0; i < indent * 2; i++) {
+            System.out.print(" ");
+        }
+        System.out.println(label);
+        for (var child : children) {
+            child.print(indent + 1);
+        }
     }
 }

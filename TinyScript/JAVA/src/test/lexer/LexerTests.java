@@ -73,10 +73,22 @@ public class LexerTests {
     public void test_deleteComment() throws LexicalException {
         var source = "/*123123123\n123123123*/a=1";
         var lexer = new Lexer();
-        var tokens=lexer.analyse(source.chars().mapToObj(x->(char)x));
+        var tokens = lexer.analyse(source.chars().mapToObj(x -> (char) x));
 
         // 如果我们的功能编写对了，那么注释内容会被删除
         // 即有效内容只有 a=1，对应的是 VARIABLE,OPERATOR,NUMBER
-        assertEquals(3,tokens.size());
+        assertEquals(3, tokens.size());
+    }
+
+    @Test
+    public void test_plus() throws LexicalException {
+        var source = "1+2+3+4";
+        var lexer = new Lexer();
+        var tokens = lexer.analyse(source.chars().mapToObj(x -> (char) x));
+        assertEquals(7, tokens.size());
+
+        var source2 = "1+2^3+4";
+        var tokens2 = lexer.analyse(source2.chars().mapToObj(x -> (char) x));
+        assertEquals(7, tokens2.size());
     }
 }

@@ -1,4 +1,4 @@
-package parser;
+package parser.ast;
 
 /**
  * 给 parser 定义的 ASTNodeType，来识别当前流数据是 if 语句还是 switch等

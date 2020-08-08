@@ -1,4 +1,4 @@
-package parser;
+package parser.ast;
 
 public class IfStmt extends Stmt {
     public IfStmt(ASTNode _parent) {

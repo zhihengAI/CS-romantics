@@ -1,9 +1,7 @@
-package parser;
-
-import lexer.Token;
+package parser.ast;
 
 public class Expr extends ASTNode{
-    Expr(ASTNode parent){
+    public Expr(ASTNode parent){
         super(parent);
     }
 }
