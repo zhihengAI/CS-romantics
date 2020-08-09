@@ -7,5 +7,6 @@ module.exports = {
   BRACKET: new Enum('BRACKET', 4),
   INTEGER: new Enum('INTEGER', 5),
   FLOAT: new Enum('FLOAT', 6),
-  Boolean: new Enum('Boolean', 7),
+  BOOLEAN: new Enum('BOOLEAN', 7),
+  STRING: new Enum('STRGING', 8)
 }

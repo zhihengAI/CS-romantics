@@ -5,7 +5,7 @@ const CACHE_SIZE = 10
 class PeekIterator {
   constructor(it, endToken = null) {
     this.it = it
-    // 需要 putBack 的元素
+    // 需要putBack的元素
     this.stackPutBacks = new LinkedList()
 
     // 基于时间窗口的缓存
@@ -21,7 +21,6 @@ class PeekIterator {
 
     const val = this.next()
     this.putBack()
-
     return val
   }
 
@@ -32,7 +31,6 @@ class PeekIterator {
   }
 
   hasNext() {
-    // !null -> true -> false
     return this.endToken || !!this.peek()
   }
 
@@ -46,7 +44,7 @@ class PeekIterator {
       if (val === undefined) {
         const tmp = this.endToken
         this.endToken = null
-        return tmp
+        val = tmp
       }
     }
 

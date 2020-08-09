@@ -7,7 +7,7 @@ class LexicalException extends Error {
   }
 
   static fromChar(c) {
-    return new LexicalException(`Unexpected char ${c}`);
+    return new LexicalException(`unexpected char ${c}`)
   }
 }
 
