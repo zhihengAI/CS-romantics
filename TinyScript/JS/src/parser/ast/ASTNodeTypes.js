@@ -1,4 +1,4 @@
-const Enum = require('../common/Enum')
+const Enum = require('../../common/Enum')
 
 module.exports = {
   BLOCK: new Enum("BLOCK", 1),
