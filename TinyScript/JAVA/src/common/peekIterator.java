@@ -4,9 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
-// 流数据处理
 public class PeekIterator<T> implements Iterator<T> {
-
     private Iterator<T> it;
 
     private LinkedList<T> queueCache = new LinkedList<>();
@@ -14,9 +12,16 @@ public class PeekIterator<T> implements Iterator<T> {
     private final static int CACHE_SIZE = 10;
     private T _endToken = null;
 
+
     public PeekIterator(Stream<T> stream) {
         it = stream.iterator();
     }
+
+    public PeekIterator(Iterator<T> _it, T endToke) {
+        this.it = _it;
+        this._endToken = endToke;
+    }
+
 
     public PeekIterator(Stream<T> stream, T endToken) {
         it = stream.iterator();
@@ -30,18 +35,19 @@ public class PeekIterator<T> implements Iterator<T> {
         if (!it.hasNext()) {
             return _endToken;
         }
-
         T val = next();
         this.putBack();
         return val;
     }
 
-    // 缓存 A -> B -> C -> D
-    // 放回 D -> C -> B -> A
+    // 缓存:A -> B -> C -> D
+    // 放回:D -> C -> B -> A
     public void putBack() {
+
         if (this.queueCache.size() > 0) {
             this.stackPutBacks.push(this.queueCache.pollLast());
         }
+
     }
 
     @Override
@@ -51,6 +57,7 @@ public class PeekIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
+
         T val = null;
         if (this.stackPutBacks.size() > 0) {
             val = this.stackPutBacks.pop();
@@ -62,12 +69,10 @@ public class PeekIterator<T> implements Iterator<T> {
             }
             val = it.next();
         }
-
         while (queueCache.size() > CACHE_SIZE - 1) {
             queueCache.poll();
         }
         queueCache.add(val);
-
         return val;
     }
 }

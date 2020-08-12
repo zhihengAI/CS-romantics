@@ -1,9 +1,21 @@
 package parser.ast;
 
-import parser.util.PeekTokenIterator;
+import lexer.Token;
 
 public class Variable extends Factor {
-    public Variable(ASTNode _parent, PeekTokenIterator it) {
-        super(_parent, it);
+
+    private Token typeLexeme = null;
+
+    public Variable(Token token) {
+        super(token);
+        this.type = ASTNodeTypes.VARIABLE;
+    }
+
+    public void setTypeLexeme(Token token) {
+        this.typeLexeme = token;
+    }
+
+    public Token getTypeLexeme() {
+        return this.typeLexeme;
     }
 }

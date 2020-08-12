@@ -3,31 +3,23 @@ package lexer;
 import common.AlphabetHelper;
 import common.PeekIterator;
 
-import java.security.AlgorithmParameterGenerator;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class Lexer {
-    /**
-     * 把词法分析器的各个功能联立起来
-     *
-     * @param source
-     * @return
-     */
-    public ArrayList<Token> analyse(Stream source) throws LexicalException {
+
+    public ArrayList<Token> analyse(PeekIterator<Character> it) throws LexicalException {
         var tokens = new ArrayList<Token>();
-        var it = new PeekIterator<Character>(source, (char) 0);
 
         while (it.hasNext()) {
             char c = it.next();
 
-            // 0 就是我们的结尾
             if (c == 0) {
                 break;
             }
-
             char lookahead = it.peek();
-            // System.out.println("c: " + c + " |||||  look: " + lookahead);
 
             if (c == ' ' || c == '\n') {
                 continue;
@@ -38,19 +30,20 @@ public class Lexer {
                 if (lookahead == '/') {
                     while (it.hasNext() && (c = it.next()) != '\n') {
                     }
+                    ;
                     continue;
                 } else if (lookahead == '*') {
-                    it.next(); // 多读一个 *，避免 /*/ 通过
-                    boolean vaild = false;
+                    it.next();//多读一个* 避免/*/通过
+                    boolean valid = false;
                     while (it.hasNext()) {
                         char p = it.next();
                         if (p == '*' && it.peek() == '/') {
                             it.next();
-                            vaild = true;
+                            valid = true;
                             break;
                         }
                     }
-                    if (!vaild) {
+                    if (!valid) {
                         throw new LexicalException("comments not match");
                     }
                     continue;
@@ -62,31 +55,26 @@ public class Lexer {
                 continue;
             }
 
-            // 如果读取到了 单/双引号，就把从读取的引号的位置传给 makeString 来创建字符串
             if (c == '"' || c == '\'') {
                 it.putBack();
                 tokens.add(Token.makeString(it));
                 continue;
             }
 
-            // 处理字母情况（变量或关键字词）
             if (AlphabetHelper.isLetter(c)) {
                 it.putBack();
+                ;
                 tokens.add(Token.makeVarOrKeyword(it));
                 continue;
             }
 
-            // 数字情况
             if (AlphabetHelper.isNumber(c)) {
                 it.putBack();
                 tokens.add(Token.makeNumber(it));
                 continue;
             }
 
-            // 不只是读取到数字才会触发 makeNumber，正负号也会
-            // +: 3+5, +5, 3 * -5, 3.5 有这几种情况
-            if (c == '+' || c == '-' || c == '.' && AlphabetHelper.isNumber(lookahead)) {
-                // 拿到上一个入 tokens 的字符
+            if ((c == '+' || c == '-' || c == '.') && AlphabetHelper.isNumber(lookahead)) {
                 var lastToken = tokens.size() == 0 ? null : tokens.get(tokens.size() - 1);
 
                 if (lastToken == null || !lastToken.isValue() || lastToken.isOperator()) {
@@ -94,7 +82,6 @@ public class Lexer {
                     tokens.add(Token.makeNumber(it));
                     continue;
                 }
-
             }
 
             if (AlphabetHelper.isOperator(c)) {
@@ -105,7 +92,69 @@ public class Lexer {
 
             throw new LexicalException(c);
         } // end while
-
         return tokens;
+    }
+
+    public ArrayList<Token> analyse(Stream source) throws LexicalException {
+        var it = new PeekIterator<Character>(source, (char) 0);
+        return this.analyse(it);
+    }
+
+    /**
+     * 从源代码文件加载并解析
+     *
+     * @param src
+     * @return
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
+     * @throws LexicalException
+     */
+    public static ArrayList<Token> fromFile(String src) throws FileNotFoundException, UnsupportedEncodingException, LexicalException {
+        var file = new File(src);
+        var fileStream = new FileInputStream(file);
+        var inputStreamReader = new InputStreamReader(fileStream, "UTF-8");
+
+        var br = new BufferedReader(inputStreamReader);
+
+
+        /**
+         * 利用BufferedReader每次读取一行
+         */
+        var it = new Iterator<Character>() {
+            private String line = null;
+            private int cursor = 0;
+
+            private void readLine() throws IOException {
+                if (line == null || cursor == line.length()) {
+                    line = br.readLine();
+                    cursor = 0;
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                try {
+                    readLine();
+                    return line != null;
+                } catch (IOException e) {
+                    return false;
+                }
+            }
+
+            @Override
+            public Character next() {
+                try {
+                    readLine();
+                    return line != null ? line.charAt(cursor++) : null;
+                } catch (IOException e) {
+                    return null;
+                }
+            }
+        };
+
+        var peekIt = new PeekIterator<Character>(it, '\0');
+
+        var lexer = new Lexer();
+        return lexer.analyse(peekIt);
     }
 }

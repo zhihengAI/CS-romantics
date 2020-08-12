@@ -1,26 +1,48 @@
 package parser.util;
 
-import jdk.jshell.spi.ExecutionControl;
+import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.StringUtils;
 import parser.ast.ASTNode;
+import parser.ast.Factor;
+import parser.ast.FunctionDeclareStmt;
 
-// 为 Parser 提供的静态的方法
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class ParserUtils {
-    // 树的后序遍历，来遍历语法树表达式
-    public static String toPostfixExpression(ASTNode node) throws ExecutionControl.NotImplementedException {
-        // left op right -> left right op
-        String leftStr = "";
-        String rightStr = "";
-
-        switch (node.getType()) {
-            case BINARY_EXPR:
-                leftStr = toPostfixExpression(node.getChild(0));
-                rightStr = toPostfixExpression(node.getChild(1));
-                return leftStr + " " + rightStr + " " + node.getLexeme().getValue();
-            case VARIABLE:
-            case SCALAR:
-                return node.getLexeme().getValue();
+    // Prefix
+    // Postfix
+    public static String toPostfixExpression(ASTNode node) {
+        if (node instanceof Factor) {
+            return node.getLexeme().getValue();
         }
 
-        throw new ExecutionControl.NotImplementedException("not impl.");
+        var prts = new ArrayList<String>();
+        for (var child : node.getChildren()) {
+            prts.add(toPostfixExpression(child));
+        }
+        var lexemeStr = node.getLexeme() != null ? node.getLexeme().getValue() : "";
+        if (lexemeStr.length() > 0) {
+            return StringUtils.join(prts, " ") + " " + lexemeStr;
+        } else {
+            return StringUtils.join(prts, " ");
+        }
+    }
+
+    public static String toBFSString(ASTNode root, int max) {
+
+        var queue = new LinkedList<ASTNode>();
+        var list = new ArrayList<String>();
+        queue.add(root);
+
+        int c = 0;
+        while (queue.size() > 0 && c++ < max) {
+            var node = queue.poll();
+            list.add(node.getLabel());
+            for (var child : node.getChildren()) {
+                queue.add(child);
+            }
+        }
+        return StringUtils.join(list, " ");
     }
 }
