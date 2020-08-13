@@ -12,6 +12,7 @@ function assertToken(token, value, type) {
 }
 
 describe("Lexer", () => {
+
   it('expression', () => {
     const source = '(a+b)^100.12==+100-20'
     const lexer = new Lexer()
@@ -71,10 +72,10 @@ describe("Lexer", () => {
     assert.equal(tokens.length, 3)
   })
 
-  it("delete one line comment", () => {
-    const lexer = new Lexer()
-    const source = "//adnwjdbakd\na=1"
-    const tokens = lexer.analyse(arrayToGenerator([...source]))
-    // assert.equal(tokens.length, 3)
-  })
+  // it("delete one line comment", () => {
+  //   const lexer = new Lexer()
+  //   const source = "// asdf\na=1"
+  //   const tokens = lexer.analyse(arrayToGenerator([...source]))
+  //   assert.equal(tokens.length, 3)
+  // })
 })

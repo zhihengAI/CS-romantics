@@ -1,11 +1,9 @@
+const PeekIterator = require('../common/PeekIterator')
+const arrayToGenerator = require('../common/arrayToGenerator')
+
 const {
   assert
 } = require('chai')
-const {
-  describe
-} = require('mocha')
-const PeekIterator = require('../common/PeekIterator')
-const arrayToGenerator = require('../common/arrayToGenerator')
 
 describe('test PeekIterator', () => {
   it('test_peek', () => {
@@ -41,5 +39,17 @@ describe('test PeekIterator', () => {
         assert.equal(it.next(), 'abcdefg' [i])
       }
     }
+  })
+
+  it("peek_and_putBack", () => {
+    const it = new PeekIterator(arrayToGenerator([..."ab"]), "\0");
+    const c = it.next()
+    const lookahead = it.peek()
+    it.putBack()
+    assert.equal(it.peek(), 'a')
+    assert.equal(it.next(), 'a')
+    assert.equal(it.next(), 'b')
+    it.peek()
+    assert.equal(it.next(), '\0')
   })
 })

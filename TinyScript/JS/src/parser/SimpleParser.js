@@ -1,13 +1,13 @@
 const Expr = require("./ast/Expr")
-const Scalar = require('./ast/Scalar')
+const Factor = require('./ast/Factor')
 const ASTNodeTypes = require('./ast/ASTNodeTypes')
 
 class SimpleParser {
   // Expr -> digit + Expr | digit
   // digit -> 0|1|2|3|...|9
   static parse(it) {
-    const expr = new Expr()
-    const scalar = new Scalar(expr, it)
+    const expr = new Expr(null)
+    const scalar = Factor.parse(it)
     if (!it.hasNext()) {
       return scalar
     }

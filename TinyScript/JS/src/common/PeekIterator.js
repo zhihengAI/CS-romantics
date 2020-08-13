@@ -22,6 +22,7 @@ class PeekIterator {
     const val = this.next()
     this.putBack()
     return val
+
   }
 
   putBack() {

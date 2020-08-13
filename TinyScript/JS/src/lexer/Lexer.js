@@ -4,6 +4,7 @@ const TokenType = require("./TokenType")
 const AlphabetHelper = require("./AlphabetHelper")
 const LexicalException = require("./LexicalException")
 const arrayToGenerator = require("../common/arrayToGenerator")
+const PeekTokenIterator = require("../parser/util/PeekTokenIterator")
 const fs = require("fs")
 
 class Lexer {
@@ -25,7 +26,7 @@ class Lexer {
       // 提取注释的程序
       if (c == "/") {
         if (lookahead == "/") {
-          while (it.hasNext() && (c = it.next()) != "\n") {}
+          while (it.hasNext() && (c = it.next()) != "\n")
           continue
         } else if (lookahead == "*") {
           let valid = false
