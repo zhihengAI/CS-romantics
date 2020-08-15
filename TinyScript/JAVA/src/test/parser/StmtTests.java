@@ -70,7 +70,7 @@ public class StmtTests {
     @Test
     public void function() throws FileNotFoundException, UnsupportedEncodingException, LexicalException, ParseException {
         var tokens = Lexer.fromFile("./example/function.ts");
-        var functionStmt = (FunctionDeclareStmt)Stmt.parseStmt( new PeekTokenIterator(tokens.stream()));
+        var functionStmt = (FunctionDeclareStmt)Stmt.parseStmt(new PeekTokenIterator(tokens.stream()));
 
         var args = functionStmt.getArgs();
         assertEquals("a", args.getChild(0).getLexeme().getValue());
@@ -89,7 +89,7 @@ public class StmtTests {
     @Test
     public void function1() throws FileNotFoundException, UnsupportedEncodingException, LexicalException, ParseException {
         var tokens = Lexer.fromFile("./example/recursion.ts");
-        var functionStmt = (FunctionDeclareStmt)Stmt.parseStmt( new PeekTokenIterator(tokens.stream()));
+        var functionStmt = (FunctionDeclareStmt)Stmt.parseStmt(new PeekTokenIterator(tokens.stream()));
 
         assertEquals("func fact args block", ParserUtils.toBFSString(functionStmt, 4));
         assertEquals("args n", ParserUtils.toBFSString(functionStmt.getArgs(), 2));
