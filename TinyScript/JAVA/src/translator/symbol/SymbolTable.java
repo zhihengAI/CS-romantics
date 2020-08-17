@@ -112,6 +112,10 @@ public class SymbolTable {
         return this.offsetIndex;
     }
 
+    public ArrayList<Symbol> getSymbols() {
+        return this.symbols;
+    }
+
     public ArrayList<SymbolTable> getChildren() {
         return this.children;
     }

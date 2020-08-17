@@ -67,7 +67,14 @@ public class Symbol {
 
     @Override
     public String toString() {
-        return lexeme.getValue();
+        switch (this.type) {
+            case ADDRESS_SYMBOL:
+            case LABEL_SYMBOL:
+                return lexeme.getValue();
+            case IMMEDIATE_SYMBOL:
+                return label;
+        }
+        return "";
     }
 
     public void setLexeme(Token lexeme) {
@@ -87,7 +94,7 @@ public class Symbol {
         return this.layerOffset;
     }
 
-    public String getLabel(){
+    public String getLabel() {
         return this.label;
     }
 }
