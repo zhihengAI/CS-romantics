@@ -1,54 +1,42 @@
 const TAInstructionType = require('./TAInstructionType')
 
-// 三地址指令
-// TA = Three Address
 class TAInstruction {
-  constructor(type, result, op, arg1 = null, arg2 = null) {
+  constructor(type, result, op, arg1, arg2) {
     this.op = op
     this.type = type
-    this.result = result
     this.arg1 = arg1
     this.arg2 = arg2
+    this.result = result
+    this.label = null
   }
 
-  // toString 本来不是很重要的方法，但是我们自动化测试需要依赖它来判断结果，所以就变重要了
   toString() {
-    switch (type) {
+    switch (this.type) {
       case TAInstructionType.ASSIGN: {
-
         if (this.arg2 != null) {
           return `${this.result} = ${this.arg1} ${this.op} ${this.arg2}`
         } else {
           return `${this.result} = ${this.arg1}`
         }
       }
-      case TAInstructionType.IF: {
+      case TAInstructionType.IF:
         return `IF ${this.arg1} ELSE ${this.arg2}`
-      }
-      case TAInstructionType.GOTO: {
+      case TAInstructionType.GOTO:
         return `GOTO ${this.arg1}`
-      }
-      case TAInstructionType.LABEL: {
-        return `${this.arg1}`
-      }
-      case TAInstructionType.RETURN: {
+      case TAInstructionType.LABEL:
+        return `${this.arg1}:`
+      case TAInstructionType.RETURN:
         return `RETURN ${this.arg1}`
-      }
-      case TAInstructionType.PARAM: {
+      case TAInstructionType.PARAM:
         return `PARAM ${this.arg1} ${this.arg2}`
-      }
-      case TAInstructionType.SP: {
-        return `SP ${this.arg1}`
-      }
-      case TAInstructionType.CALL: {
-        return `CALL ${this.arg1.getLabel()}`
-      }
+      case TAInstructionType.SP:
+        return `SP ${this.arg1}`;
+      case TAInstructionType.CALL:
+        return `CALL ${this.arg1}`
     }
-
-    throw new Error("Unknown instruction type: " + this.type)
+    throw new Error("Unkonw opcode type:" + this.type);
   }
 
-  // 字段的 Setter Getter
   getResult() {
     return this.result
   }
