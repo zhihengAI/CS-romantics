@@ -3,6 +3,7 @@ package translator;
 import lexer.LexicalException;
 import org.junit.jupiter.api.Test;
 import parser.Parser;
+import parser.util.GraphvizHelpler;
 import parser.util.ParseException;
 import translator.symbol.SymbolTable;
 
@@ -46,7 +47,7 @@ public class TransExprTests {
 
     }
 
-    /*@Test
+    @Test
     public void optimizeExpr() throws LexicalException, ParseException {
         var source = "a+(b-c)+d*(b-c)*2";
         var program = Parser.parse(source);
@@ -79,7 +80,6 @@ public class TransExprTests {
                 "\"v9\" -> \"v10\"\n";
         assertEquals(expected, actual);
     }
-     */
 
     @Test
     public void testAssignStmt() throws LexicalException, ParseException {
